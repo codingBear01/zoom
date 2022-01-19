@@ -23,15 +23,24 @@ socket.addEventListener("close", () => {
   console.log("Disconnected from Server ❌");
 }); // backend에서 browser 연결 끊겼을 때 표시
 
-msgForm.addEventListener("submit", (event) => {
+function handleSubmit(event) {
   event.preventDefault();
   const input = msgForm.querySelector("input");
   socket.send(makeMsg("new_message", input.value));
-  input.value = "";
-});
 
-nickForm.addEventListener("submit", (event) => {
+  const li = document.createElement("li");
+  li.innerText = `You: ${input.value}`;
+  msgList.append(li);
+
+  input.value = "";
+}
+
+function handleNickSubmit(event) {
   event.preventDefault();
   const input = nickForm.querySelector("input");
   socket.send(makeMsg("nickname", input.value));
-});
+  input.value = "";
+}
+
+msgForm.addEventListener("submit", handleSubmit);
+nickForm.addEventListener("submit", handleNickSubmit);
