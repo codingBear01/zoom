@@ -34,3 +34,14 @@ wss.on("connection", (socket) => {
 // backend의 socket은 연결된 browser
 
 server.listen(3000, handleListen);
+
+// JSON
+
+{
+  type: "msg";
+  payload: "hello";
+}
+{
+  type: "nick";
+  payload: "kang";
+}
