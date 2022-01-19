@@ -125,7 +125,48 @@ const wss = new WebSocket.Server({ server }); // 생성된 server 기반 ws 생�
 // http & ws 동시 사용 가능(필요에 따라 하나만 생성해도 됨)
 
 
+#1.4 WebSocket Messages
 
+-- server.js
+
+wss.on("connection", (socket) => {
+  console.log("Connected to Browser ✅"); // broswer 연결 backend 표시
+
+  socket.on("close", () => {
+    console.log("Disconnected from Browser ❌");
+  }); // frontend 창 닫혔을 시 backend에 표시
+
+  socket.on("message", (message) => {
+    console.log(message.toString("utf-8"));
+  }); // frontend에서 온 message 표시
+
+  socket.send("hello!"); // frontend에 message 전송
+});
+// backend의 socket은 연결된 browser
+
+server.listen(3000, handleListen);
+
+
+-- app.js
+
+const socket = new WebSocket(`ws://${window.location.host}`);
+// frontend의 socket은 server로의 연결
+
+socket.addEventListener("open", () => {
+  console.log("Connected to Server ✅");
+}); // server에 정상 연결 시 표시
+
+socket.addEventListener("message", (message) => {
+  console.log("New Message: ", message.data, " from the Server");
+}); // backend에서 온 message 표시
+
+socket.addEventListener("close", () => {
+  console.log("Disconnected from Server ❌");
+}); // backend에서 browser 연결 끊겼을 때 표시
+
+setTimeout(() => {
+  socket.send("hello from the browser 🖐");
+}, 1000); // backend로 message 전송
 
 
 
