@@ -15,4 +15,10 @@ const handleListen = () => console.log(`Listening on http://localhost:3000`);
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
+function handleConnection(socket) {
+  console.log(socket); // backend의 socket은 연결된 browser
+}
+
+wss.on("connection", handleConnection);
+
 server.listen(3000, handleListen);

@@ -1,6 +1,6 @@
 <#0 INTRODUCTION>
 
-#0.2 Server Setup & #0.3 Frontend Setup
+#0.2 Server Setup & #0.3 Frontend Setup 
 
 -- 폴더 만들기 & 경로 설정
 mkdir <folder name>
@@ -96,6 +96,8 @@ html(lang="en")
         script(src="/public/js/app.js") 
 
 
+*npm run dev // 서버 실행
+
 <#1 CHAT WITH WEBSOCKETS>
 
 #1.2 WebSockets in NodeJS
@@ -121,6 +123,36 @@ const server = http.createServer(app); // express.js 활용 server 생성
 const wss = new WebSocket.Server({ server }); // 생성된 server 기반 ws 생성
 
 // http & ws 동시 사용 가능(필요에 따라 하나만 생성해도 됨)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
