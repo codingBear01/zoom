@@ -1,3 +1,5 @@
+const msgList = document.querySelector("ul");
+const msgForm = document.querySelector("form");
 const socket = new WebSocket(`ws://${window.location.host}`);
 // frontend의 socket은 server로의 연결
 
@@ -13,6 +15,9 @@ socket.addEventListener("close", () => {
   console.log("Disconnected from Server ❌");
 }); // backend에서 browser 연결 끊겼을 때 표시
 
-setTimeout(() => {
-  socket.send("hello from the browser 🖐");
-}, 1000); // backend로 message 전송
+msgForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const input = msgForm.querySelector("input");
+  socket.send(input.value);
+  input.value = "";
+});
