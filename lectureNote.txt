@@ -1,0 +1,119 @@
+#0.2 Server Setup & #0.3 Frontend Setup
+
+-- 폴더 만들기 & 경로 설정
+mkdir <folder name>
+cd <folder>
+npm init -y
+
+
+-- package.json 설정 & README.md
+delete main & scripts
+keywords, author 등은 필요 시 설정
+license 무엇? MIT? ISC?
+
+touch README.md // README 파일 생성
+
+
+-- nodemon
+npm i nodemon -D
+
+babel.config.json 파일 생성
+nodemon.json 파일 생성
+
+/src/server.js
+
+
+-- babel
+
+git init .
+npm i @babel/core @babel/cli @babel/node -D
+npm i @babel/preset-env -D
+
+.gitignore //node_modules 무시
+
+
+-- nodemon.json
+{
+  "ignore": ["src/public/*"], // frontEnd 파일 저장 시 서버 재시작 방지
+  "exec": "babel-node src/server.js" // server.js에 대해 babel-node 명령문 실행
+}
+
+
+-- babel.config.json
+{
+  "presets": ["@babel/preset-env"]
+}
+
+
+-- package.json
+  "scripts": {
+    "dev": "nodemon"
+  },
+
+
+-- install express & pug
+npm i express
+npm i pug
+
+
+-- create public folder // frontend folder
+public/js/app.js
+views/home.pug // html5 입력
+
+
+-- server.js
+import express from "express"; // server.js 내에 express import
+
+const app = express();
+
+app.set("view engine", "pug");
+app.set("views", __dirname + "/views"); // express에 template 위치 부여
+app.use("/public", express.static(__dirname + "/public")); // public folder 내 파일에 access *static 작업
+app.get("/", (req, res) => res.render("home")); // home.pug를 render하는 route handler
+
+const handleListen = () => console.log(`Listening on http://localhost:3000`);
+
+app.listen(3000, handleListen);
+
+
+-- home.pug
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Noom
+        link(rel="stylesheet", href="https://unpkg.com/mvp.css") // css style site
+
+    body 
+        header
+            h1 It works!
+        main 
+            h2 Welcome to Noom
+        
+        script(src="/public/js/app.js") 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
