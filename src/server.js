@@ -1,7 +1,7 @@
 import http from "http";
-import WebSocket from "ws";
+import SocketIO from "socket.io";
 import express from "express";
-import { SocketAddress } from "net";
+// import { SocketAddress } from "net";
 
 const app = express();
 
@@ -11,12 +11,15 @@ app.use("/public", express.static(__dirname + "/public"));
 app.get("/", (_, res) => res.render("home"));
 app.get("/*", (_, res) => res.redirect("/"));
 
-const handleListen = () => console.log(`Listening on http://localhost:3000`);
+const httpServer = http.createServer(app);
+const wsServer = SocketIO(httpServer);
 
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
+wsServer.on("connection", (socket) => {
+  console.log(socket);
+});
 
-const sockets = [];
+/*const sockets = [];
+const wss = new WebSocket.Server({ httpServer });
 
 wss.on("connection", (socket) => {
   sockets.push(socket);
@@ -40,9 +43,10 @@ wss.on("connection", (socket) => {
     }
   }); // forEach문 돌면서 각 browser에 msg 전송
 });
-// backend의 socket은 연결된 browser
+// backend의 socket은 연결된 browser */
 
-server.listen(3000, handleListen);
+const handleListen = () => console.log(`Listening on http://localhost:3000`);
+httpServer.listen(3000, handleListen);
 
 // JSON
 
